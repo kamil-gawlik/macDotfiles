@@ -1,15 +1,17 @@
 -- Inspired by
 -- https://github.com/digitalbase/hammerspoon/blob/master/init.lua
 
+-------------------------------------------------------------------------------
+-- imported spoons
+-------------------------------------------------------------------------------
+hs.loadSpoon("Lunette")
+spoon.Lunette:bindHotkeys()
 
 -------------------------------------------------------------------------------
 -- generic configuration
 -------------------------------------------------------------------------------
 hs.window.animationDuration = 0
 hs.application.enableSpotlightForNameSearches(true)
-
-hs.loadSpoon("Lunette")
-spoon.Lunette:bindHotkeys()
 
 ext = {frame = {}, win = {}, app = {}, utils = {}, cache = {}, watchers = {}}
 local baseCombination = {"cmd", "shift"}
