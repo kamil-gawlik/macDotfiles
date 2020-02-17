@@ -1,6 +1,5 @@
 -- Inspired by
 -- https://github.com/digitalbase/hammerspoon/blob/master/init.lua
-
 -------------------------------------------------------------------------------
 -- imported spoons
 -------------------------------------------------------------------------------
@@ -16,9 +15,9 @@ hs.application.enableSpotlightForNameSearches(true)
 ext = {frame = {}, win = {}, app = {}, utils = {}, cache = {}, watchers = {}}
 local baseCombination = {"cmd", "shift"}
 
-local left_monitor = 724071761
-local right_monitor = 724070486
-local laptoo_monitor = 69734272
+local left_monitor = "96DDBD58-B5ED-1F7B-0DF7-6BB7E9B33C4B"
+local right_monitor = "040F4BE8-EC7B-639D-0EE6-7C7F9074AFF6"
+local laptoo_monitor = "CB3CCF8F-5EB5-E799-61FA-B8A0EA9E8D13"
 
 -- helper function
 local forEach = function(config, fun) hs.fnutils.each(config, fun) end
@@ -66,13 +65,15 @@ end)
 -------------------------------------------------------------------------------
 local defaltSetupConfig = {
     {appName = "Firefox", monitor = left_monitor},
+    {appName = "Station", monitor = left_monitor},
     {appName = "Mail", monitor = left_monitor},
     {appName = "Calendar", monitor = left_monitor},
     {appName = "IntelliJ IDEA", monitor = right_monitor},
     {appName = "Spotify", monitor = laptoo_monitor}
 }
 
-hs.hotkey.bind(baseCombination, "0", function() moveWindowsToScreen(defaltSetupConfig) end)
+hs.hotkey.bind(baseCombination, "0",
+               function() moveWindowsToScreen(defaltSetupConfig) end)
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
