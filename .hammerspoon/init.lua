@@ -15,9 +15,10 @@ hs.application.enableSpotlightForNameSearches(true)
 ext = {frame = {}, win = {}, app = {}, utils = {}, cache = {}, watchers = {}}
 local baseCombination = {"cmd", "shift"}
 
-local left_monitor = "96DDBD58-B5ED-1F7B-0DF7-6BB7E9B33C4B"
-local right_monitor = "040F4BE8-EC7B-639D-0EE6-7C7F9074AFF6"
-local laptoo_monitor = "CB3CCF8F-5EB5-E799-61FA-B8A0EA9E8D13"
+local primaryMonitor = hs.screen.primaryScreen()
+local left_monitor = primaryMonitor:id()
+local right_monitor = primaryMonitor:toEast():id()
+local laptoo_monitor = primaryMonitor:toEast():toEast():id()
 
 -- helper function
 local forEach = function(config, fun) hs.fnutils.each(config, fun) end
