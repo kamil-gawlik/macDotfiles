@@ -3,8 +3,34 @@
 -------------------------------------------------------------------------------
 -- imported spoons
 -------------------------------------------------------------------------------
+hs.loadSpoon("SpoonInstall")
+
 hs.loadSpoon("Lunette")
-spoon.Lunette:bindHotkeys()
+local customBindings = {
+    undo = false,
+    topLeft = false,
+    topRight = false,
+    bottomLeft = false,
+    bottomRight = false,
+    leftHalf = {{{"cmd", "ctrl"}, "left"}},
+    rightHalf = {{{"cmd", "ctrl"}, "right"}}
+}
+spoon.Lunette:bindHotkeys(customBindings)
+
+spoon.SpoonInstall:andUse("PushToTalk", {
+    start = true,
+    config = {app_switcher = {['Slack'] = 'push-to-talk'}}
+})
+
+-- helper function
+local forEach = function(config, fun) hs.fnutils.each(config, fun) end
+local getOrElse = function(optional, alternative)
+    if (optional == nil) then
+        return alternative
+    else
+        return optional
+    end
+end
 
 -------------------------------------------------------------------------------
 -- generic configuration
@@ -17,11 +43,11 @@ local baseCombination = {"cmd", "shift"}
 
 local primaryMonitor = hs.screen.primaryScreen()
 local left_monitor = primaryMonitor:id()
-local right_monitor = primaryMonitor:toEast():id()
-local laptoo_monitor = primaryMonitor:toEast():toEast():id()
-
--- helper function
-local forEach = function(config, fun) hs.fnutils.each(config, fun) end
+local laptop_monitor = nil
+if(primaryMonitor:toEast() ~= nil) then
+  laptop_monitor = primaryMonitor:toEast():id()
+  print("loading laptop screen with id: ",laptop_monitor)
+end
 
 -------------------------------------------------------------------------------
 -- reload configuration
@@ -35,9 +61,11 @@ end)
 -- launch or focus applications with shortkey
 -------------------------------------------------------------------------------
 local keyToAppConfig = {
-    {key = "e", app = "IntelliJ IDEA"}, {key = "d", app = "Station"},
+    {key = "e", app = "IntelliJ IDEA"}, {key = "d", app = "Slack"},
     {key = "m", app = "Mail"}, {key = "f", app = "Firefox"},
-    {key = "c", app = "Calendar"}
+    {key = "c", app = "Calendar"}, {key = "s", app = "Spotify"},
+    {key = "v", app = "Visual Studio Code"}, {key = "`", app = "Bear"},
+    {key = "n", app = "Nozbe"}
 }
 forEach(keyToAppConfig, function(object)
     hs.hotkey.bind(baseCombination, object.key,
@@ -48,8 +76,9 @@ end)
 -- push active window to monitor
 -------------------------------------------------------------------------------
 local monitorsConfig = {
-    {key = "1", monitor = left_monitor}, {key = "2", monitor = right_monitor},
-    {key = "3", monitor = laptoo_monitor}
+    {key = "1", monitor = left_monitor},
+    -- {key = "2", monitor = right_monitor},
+    {key = "2", monitor = laptop_monitor}
 }
 
 forEach(monitorsConfig, function(config)
@@ -66,11 +95,11 @@ end)
 -------------------------------------------------------------------------------
 local defaltSetupConfig = {
     {appName = "Firefox", monitor = left_monitor},
-    {appName = "Station", monitor = left_monitor},
+    {appName = "Slack", monitor = laptop_monitor},
     {appName = "Mail", monitor = left_monitor},
     {appName = "Calendar", monitor = left_monitor},
-    {appName = "IntelliJ IDEA", monitor = right_monitor},
-    {appName = "Spotify", monitor = laptoo_monitor}
+    {appName = "IntelliJ IDEA", monitor = left_monitor},
+    {appName = "Spotify", monitor = laptop_monitor}
 }
 
 hs.hotkey.bind(baseCombination, "0",
