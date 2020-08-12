@@ -65,7 +65,8 @@ local keyToAppConfig = {
     {key = "m", app = "Mail"}, {key = "f", app = "Firefox"},
     {key = "c", app = "Calendar"}, {key = "s", app = "Spotify"},
     {key = "v", app = "Visual Studio Code"}, {key = "`", app = "Bear"},
-    {key = "n", app = "Nozbe"}, {key = "g", app = "Google Chrome"}
+    {key = "n", app = "Nozbe"}, {key = "g", app = "Google Chrome"},
+    {key = "w", app = "Safari"}
 }
 forEach(keyToAppConfig, function(object)
     hs.hotkey.bind(baseCombination, object.key,
