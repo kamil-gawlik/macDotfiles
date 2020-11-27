@@ -98,8 +98,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-NEXUS_USER=kamil.gawlik_ro
-NEXUS_PASSWORD=fjWH5mwndr7JpWV
 MAVEN_USER=$NEXUS_USER
 MAVEN_PASSWORD=$NEXUS_PASSWORD
 
