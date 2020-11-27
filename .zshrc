@@ -124,3 +124,6 @@ export SDKMAN_DIR="/Users/kamil.gawlik/.sdkman"
 
 # general coulour colorizer
 [[ -s "/usr/local/etc/grc.zsh" ]] && source /usr/local/etc/grc.zsh
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/Cellar/tfenv/2.0.0/versions/0.13.4/terraform terraform

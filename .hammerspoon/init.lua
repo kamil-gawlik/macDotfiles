@@ -26,11 +26,17 @@ spoon.SpoonInstall:andUse("PushToTalk", {
 local forEach = function(config, fun) hs.fnutils.each(config, fun) end
 local getOrElse = function(optional, alternative)
     if (optional == nil) then
-        return alternative
+        return alternativ
     else
         return optional
     end
 end
+
+-------------------------------------------------------------------------------
+-- menu
+-------------------------------------------------------------------------------
+menuHammer = hs.loadSpoon("MenuHammer")
+menuHammer:enter()
 
 -------------------------------------------------------------------------------
 -- generic configuration
@@ -44,9 +50,9 @@ local baseCombination = {"cmd", "shift"}
 local primaryMonitor = hs.screen.primaryScreen()
 local left_monitor = primaryMonitor:id()
 local laptop_monitor = nil
-if(primaryMonitor:toEast() ~= nil) then
-  laptop_monitor = primaryMonitor:toEast():id()
-  print("loading laptop screen with id: ",laptop_monitor)
+if (primaryMonitor:toEast() ~= nil) then
+    laptop_monitor = primaryMonitor:toEast():id()
+    print("loading laptop screen with id: ", laptop_monitor)
 end
 
 -------------------------------------------------------------------------------
