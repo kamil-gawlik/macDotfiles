@@ -35,8 +35,8 @@ end
 -------------------------------------------------------------------------------
 -- menu
 -------------------------------------------------------------------------------
-menuHammer = hs.loadSpoon("MenuHammer")
-menuHammer:enter()
+-- menuHammer = hs.loadSpoon("MenuHammer")
+-- menuHammer:enter()
 
 -------------------------------------------------------------------------------
 -- generic configuration
@@ -46,14 +46,6 @@ hs.application.enableSpotlightForNameSearches(true)
 
 ext = {frame = {}, win = {}, app = {}, utils = {}, cache = {}, watchers = {}}
 local baseCombination = {"cmd", "shift"}
-
-local primaryMonitor = hs.screen.primaryScreen()
-local left_monitor = primaryMonitor:id()
-local laptop_monitor = nil
-if (primaryMonitor:toEast() ~= nil) then
-    laptop_monitor = primaryMonitor:toEast():id()
-    print("loading laptop screen with id: ", laptop_monitor)
-end
 
 -------------------------------------------------------------------------------
 -- reload configuration
@@ -67,11 +59,12 @@ end)
 -- launch or focus applications with shortkey
 -------------------------------------------------------------------------------
 local keyToAppConfig = {
-    {key = "e", app = "IntelliJ IDEA"}, {key = "d", app = "Slack"},
+    {key = "e", app = "IntelliJ IDEA Ultimate"}, {key = "d", app = "Slack"},
     {key = "m", app = "Mail"}, {key = "f", app = "Firefox"},
     {key = "c", app = "Calendar"}, {key = "s", app = "Spotify"},
-    {key = "v", app = "Visual Studio Code"}, {key = "`", app = "Bear"},
-    {key = "n", app = "Nozbe"}, {key = "x", app = "Google Chrome"}
+    {key = "v", app = "Visual Studio Code"}, {key = "b", app = "Bear"},
+    {key = "n", app = "Nozbe"}, {key = "x", app = "Google Chrome"},
+    {key = "z", app = "Signal"}, {key = "w", app = "Warp"}
 }
 forEach(keyToAppConfig, function(object)
     hs.hotkey.bind(baseCombination, object.key,
@@ -81,10 +74,22 @@ end)
 -------------------------------------------------------------------------------
 -- push active window to monitor
 -------------------------------------------------------------------------------
+
+local laptopMonitorId = hs.screen.find("Retina Display"):id()
+local primaryMonitor = hs.screen.primaryScreen()
+local primaryMonitorId = primaryMonitor:id()
+local secondaryMonitorId = nil
+if (primaryMonitor:toEast() ~= nil) then
+    secondaryMonitorId = primaryMonitor:toEast():id()
+elseif (primaryMonitor:toWest() ~= nil) then
+    secondaryMonitorId = primaryMonitor:toWest():id()
+end
+
+
 local monitorsConfig = {
-    {key = "1", monitor = left_monitor},
-    -- {key = "2", monitor = right_monitor},
-    {key = "2", monitor = laptop_monitor}
+    {key = "1", monitor = laptopMonitorId},
+    {key = "2", monitor = primaryMonitorId},
+    {key = "3", monitor = secondaryMonitorId}
 }
 
 forEach(monitorsConfig, function(config)
@@ -100,12 +105,12 @@ end)
 -- push windows to default layout
 -------------------------------------------------------------------------------
 local defaltSetupConfig = {
-    {appName = "Firefox", monitor = left_monitor},
-    {appName = "Slack", monitor = laptop_monitor},
-    {appName = "Mail", monitor = left_monitor},
-    {appName = "Calendar", monitor = left_monitor},
-    {appName = "IntelliJ IDEA", monitor = left_monitor},
-    {appName = "Spotify", monitor = laptop_monitor}
+    {appName = "Firefox", monitor = primaryMonitorId},
+    {appName = "Slack", monitor = laptopMonitorId},
+    {appName = "Mail", monitor = primaryMonitorId},
+    {appName = "Calendar", monitor = primaryMonitorId},
+    {appName = "IntelliJ IDEA", monitor = primaryMonitorId},
+    {appName = "Spotify", monitor = laptopMonitorId}
 }
 
 hs.hotkey.bind(baseCombination, "0",
@@ -126,7 +131,7 @@ function ext.app.forceLaunchOrFocus(appName)
     if ext.cache.launchTimer then ext.cache.launchTimer:stop() end
 
     -- wait 500ms for window to appear and try hard to show the window
-    ext.cache.launchTimer = hs.timer.doAfter(0.5, function()
+    ext.cache.launchTimer = hs.timer.doAfter(0.8, function()
         local frontmostApp = hs.application.frontmostApplication()
         local frontmostWindows = hs.fnutils.filter(frontmostApp:allWindows(),
                                                    function(win)
