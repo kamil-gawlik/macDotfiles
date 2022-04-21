@@ -1,0 +1,6 @@
+*
+
+# track only those files
+!.gitignore
+!.zshrc
+!.hammerspoon/init.lua
