@@ -59,7 +59,7 @@ end)
 -- launch or focus applications with shortkey
 -------------------------------------------------------------------------------
 local keyToAppConfig = {
-    {key = "e", app = "IntelliJ IDEA Ultimate"}, {key = "d", app = "Slack"},
+    {key = "e", app = "IntelliJ IDEA"}, {key = "d", app = "Slack"},
     {key = "m", app = "Mail"}, {key = "f", app = "Firefox"},
     {key = "c", app = "Calendar"}, {key = "s", app = "Spotify"},
     {key = "v", app = "Visual Studio Code"}, {key = "b", app = "Bear"},
@@ -74,8 +74,10 @@ end)
 -------------------------------------------------------------------------------
 -- push active window to monitor
 -------------------------------------------------------------------------------
-
-local laptopMonitorId = hs.screen.find("Retina Display"):id()
+local laptopMonitorId = nil
+if(hs.screen.find("Retina Display") ~= nil) then
+    laptopMonitorId = hs.screen.find("Retina Display"):id()
+end 
 local primaryMonitor = hs.screen.primaryScreen()
 local primaryMonitorId = primaryMonitor:id()
 local secondaryMonitorId = nil

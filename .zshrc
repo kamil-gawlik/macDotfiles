@@ -68,7 +68,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions docker terraform)
+plugins=(git zsh-autosuggestions docker terraform autojump zsh-navigation-tools sudo)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -105,9 +105,10 @@ alias dl='docker login internal.docker.atm.osp.tech -p $NEXUS_PASSWORD -u $NEXUS
 alias dclear='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images -a -q)'
 alias port='function p(){lsof -nP -i4TCP:$1}; p'
 alias t='terraform'
+alias fin='terminal-notifier -message task finished'
 
 # map right cmd to alt
-hidutil property --set '{"UserKeyMapping":
+ hidutil property --set '{"UserKeyMapping":
       [{"HIDKeyboardModifierMappingSrc":0x7000000e7,
         "HIDKeyboardModifierMappingDst":0x7000000e6},]}' >/dev/null
 
@@ -116,12 +117,15 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/kamil.gawlik/.sdkman"
-[[ -s "/Users/kamil.gawlik/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/kamil.gawlik/.sdkman/bin/sdkman-init.sh"
-
 # general coulour colorizer
 [[ -s "/usr/local/etc/grc.zsh" ]] && source /usr/local/etc/grc.zsh
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/Cellar/tfenv/2.0.0/versions/0.13.4/terraform terraform
+
+export PATH="$PATH:/Users/kamil.gawlik/Library/Application Support/Coursier/bin"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/kamil.gawlik/.sdkman"
+[[ -s "/Users/kamil.gawlik/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/kamil.gawlik/.sdkman/bin/sdkman-init.sh"
+
